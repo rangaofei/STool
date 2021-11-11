@@ -1,0 +1,53 @@
+plugins {
+    id 'org.jetbrains.intellij' version '1.2.1'
+    id 'java'
+}
+
+sourceCompatibility = 11
+
+def major_version = 0
+def minor_version = 0
+def build_version = 4
+
+def versionCode = major_version * 1000 + minor_version * 100 + build_version
+
+def versionName = "${major_version}.${minor_version}.${build_version}"
+
+group 'com.rangaofei'
+version versionName
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2021.2.3'
+}
+
+publishPlugin {
+    channels = ['Stable']
+    token = "perm:cmdmNDU2.OTItNTAwNw==.MFTjoFG7SGBVwAayklvLvoREmI92lz"
+}
+
+patchPluginXml {
+    changeNotes = """
+      <strong> V0.0.3 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-11</font><br>
+      add base64 codec<br>
+      <br>
+      <strong> V0.0.2 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-09</font><br>
+      make the button pretty<br>
+      <br>
+      <strong> V0.0.1 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-07</font><br>
+      add encode and decode url function <br>
+      <br>
+      """
+}
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>com.rangaofei.UrlTool</id>
+    <name>STool</name>
+    <vendor email="876038559@qq.com" url="http://product.rangaofei.cn">Saka</vendor>
+
+    <description><![CDATA[
+   Simple Tool for URL encode and decode and more.
+Just <strong>enter your URL</strong> in the top edit-box and <strong>click</strong> the decode or encode button to edit the url. Then you can copy the result anywhere.
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+                anchor="right"
+                canCloseContents="false"
+                factoryClass="cn.rangaofei.urltool.MainWindowFactory"
+                id="stool">
+        </toolWindow>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
