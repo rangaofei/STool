@@ -51,12 +51,24 @@ public class MainWindow extends JPanel {
                 String str = CodecTool.encodeBase64(urlEditor.getText());
                 codecPanel.setText(str);
             }
+
+            @Override
+            public void hexDecode() {
+                String str = CodecTool.hexToString(urlEditor.getText());
+                codecPanel.setText(str);
+            }
+
+            @Override
+            public void hexEncode(String sep) {
+                String str = CodecTool.stringToHex(urlEditor.getText(),sep);
+                codecPanel.setText(str);
+            }
         });
     }
 
     private void initTab() {
         tabBar = new JBTabbedPane();
-        tabBar.insertTab("codec", null, codecPanel, "", 0);
+        tabBar.insertTab("Codec", null, codecPanel, "", 0);
         this.add(tabBar, BorderLayout.CENTER);
     }
 

@@ -1,20 +1,19 @@
 package cn.rangaofei.urltool.codec;
 
+import cn.rangaofei.urltool.widget.CreateButtonPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Base64CodecToolbar extends JPanel {
-    private CodecButtonListener listener;
+public class Base64CodecToolbar extends AbstractCodecPanel {
 
     public Base64CodecToolbar(CodecButtonListener listener) {
-        this.listener = listener;
-        initView();
+        super(listener);
     }
 
-    private void initView() {
-        this.setLayout(new GridLayout(1, 4));
+    protected void initView() {
         JButton base64EncodeButton = createButton("Base64Encode");
         base64EncodeButton.addActionListener(new ActionListener() {
             @Override
@@ -40,9 +39,4 @@ public class Base64CodecToolbar extends JPanel {
         this.add(base64DecodeButton);
     }
 
-    private JButton createButton(String text) {
-        JButton jButton = new JButton();
-        jButton.setText(text);
-        return jButton;
-    }
 }

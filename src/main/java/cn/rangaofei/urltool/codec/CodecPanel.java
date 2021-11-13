@@ -29,8 +29,9 @@ public class CodecPanel extends JPanel {
 
     private void addTabbedPane(){
         tabbedPane = new JBTabbedPane();
-        tabbedPane.insertTab("url",null,new UrlCodecToolbar(listener),"",0);
-        tabbedPane.insertTab("base64",null,new Base64CodecToolbar(listener),"",1);
+        tabbedPane.insertTab("Url",null,new UrlCodecToolbar(listener),"",0);
+        tabbedPane.insertTab("Base64",null,new Base64CodecToolbar(listener),"",1);
+        tabbedPane.insertTab("Hex",null,new HexCodecToolbar(listener),"",2);
         this.add(tabbedPane,BorderLayout.NORTH);
     }
 

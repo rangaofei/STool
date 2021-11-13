@@ -6,4 +6,7 @@ public interface CodecButtonListener {
 
     void base64Decode();
     void base64Encode();
+
+    void hexDecode();
+    void hexEncode(String sep);
 }
