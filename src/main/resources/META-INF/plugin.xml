@@ -17,7 +17,7 @@ Just <strong>enter your URL</strong> in the top edit-box and <strong>click</stro
                 anchor="right"
                 canCloseContents="false"
                 factoryClass="cn.rangaofei.urltool.MainWindowFactory"
-                id="stool">
+                id="Stool">
         </toolWindow>
     </extensions>
 
