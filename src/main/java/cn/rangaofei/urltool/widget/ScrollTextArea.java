@@ -7,16 +7,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ScrollTextArea extends JBScrollPane {
+    private boolean wrapText;
     private JBTextArea textArea;
 
     public ScrollTextArea() {
-        initView();
+        this(true);
     }
 
-    private void initView(){
+    public ScrollTextArea(boolean wrapText){
+        this.wrapText = wrapText;
+        initView(wrapText);
+    }
+
+    private void initView(boolean wrapText){
         this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         textArea = new JBTextArea();
-        textArea.setLineWrap(true);
+        textArea.setLineWrap(wrapText);
         textArea.setToolTipText("enter your string");
         this.setViewportView(textArea);
     }

@@ -1,13 +1,10 @@
-package cn.rangaofei.urltool;
+package cn.rangaofei.urltool.url;
 
-import cn.rangaofei.urltool.UrlModel;
+import cn.rangaofei.urltool.url.UrlModel;
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Vector;
 
 public class UrlTool {

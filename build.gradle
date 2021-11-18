@@ -7,7 +7,7 @@ sourceCompatibility = 11
 
 def major_version = 0
 def minor_version = 0
-def build_version = 5
+def build_version = 6
 
 def versionCode = major_version * 1000 + minor_version * 100 + build_version
 
@@ -39,7 +39,13 @@ publishPlugin {
 }
 
 patchPluginXml {
+    version = project.version
+    sinceBuild = '203'
+    untilBuild = '212.*'
     changeNotes = """
+      <strong> V0.0.6 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-15</font><br>
+      add barcode and qrcode generation<br>
+      <br>
       <strong> V0.0.5 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-12</font><br>
       add hex codec<br>
       <br>
@@ -48,9 +54,6 @@ patchPluginXml {
       <br>
       <strong> V0.0.2 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-09<kashiba/font><br>
       make the button pretty<br>
-      <br>
-      <strong> V0.0.1 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-07</font><br>
-      add encode and decode url function <br>
       <br>
       """
 }

@@ -1,4 +1,4 @@
-package cn.rangaofei.urltool;
+package cn.rangaofei.urltool.url;
 
 public class UrlModel {
     private String key;

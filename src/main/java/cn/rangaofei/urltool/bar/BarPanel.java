@@ -48,6 +48,10 @@ public class BarPanel extends JPanel {
         this.add(tabbedPane, BorderLayout.NORTH);
     }
 
+    public BarcodeType getBarCodeType(){
+        return barCodeToolbar.getBarCodeType();
+    }
+
     public void setImage(BufferedImage image) {
         if (image == null) {
             return;

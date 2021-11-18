@@ -5,6 +5,8 @@ import cn.rangaofei.urltool.bar.BarPanel;
 import cn.rangaofei.urltool.bar.BarcodeTool;
 import cn.rangaofei.urltool.codec.CodecButtonListener;
 import cn.rangaofei.urltool.codec.CodecPanel;
+import cn.rangaofei.urltool.url.UrlParseListener;
+import cn.rangaofei.urltool.url.UrlToolPanel;
 import cn.rangaofei.urltool.widget.ScrollTextArea;
 import com.google.zxing.WriterException;
 import com.intellij.openapi.wm.ToolWindow;
@@ -13,6 +15,8 @@ import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class MainWindow extends JPanel {
@@ -20,6 +24,7 @@ public class MainWindow extends JPanel {
     private JBTabbedPane tabBar;
     private CodecPanel codecPanel;
     private BarPanel barPanel;
+    private UrlToolPanel urlToolPanel;
 
     public MainWindow(ToolWindow toolWindow) {
         initView();
@@ -30,6 +35,7 @@ public class MainWindow extends JPanel {
         initEditor();
         initCodecPanel();
         initBarPanel();
+        initUrlToolPanel();
         initTab();
     }
 
@@ -67,19 +73,19 @@ public class MainWindow extends JPanel {
 
             @Override
             public void hexEncode(String sep) {
-                String str = CodecTool.stringToHex(urlEditor.getText(),sep);
+                String str = CodecTool.stringToHex(urlEditor.getText(), sep);
                 codecPanel.setText(str);
             }
         });
     }
 
-    private void initBarPanel(){
+    private void initBarPanel() {
         barPanel = new BarPanel(new BarCodeListener() {
             @Override
             public void barCodeClick() {
                 BufferedImage image = null;
                 try {
-                    image = BarcodeTool.generateBarCode39(urlEditor.getText());
+                    image = BarcodeTool.generateBarCode39(urlEditor.getText(), barPanel.getBarCodeType());
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
@@ -99,10 +105,20 @@ public class MainWindow extends JPanel {
         });
     }
 
+    private void initUrlToolPanel(){
+        urlToolPanel = new UrlToolPanel(new UrlParseListener() {
+            @Override
+            public void urlParseClick() {
+                urlToolPanel.setModelList(urlEditor.getText());
+            }
+        });
+    }
+
     private void initTab() {
         tabBar = new JBTabbedPane();
         tabBar.insertTab("Codec", null, codecPanel, "", 0);
-        tabBar.insertTab("BarCode",null,barPanel,"",1);
+        tabBar.insertTab("BarCode", null, barPanel, "", 1);
+        tabBar.insertTab("UrlTool", null, urlToolPanel, "", 2);
         this.add(tabBar, BorderLayout.CENTER);
     }
 
@@ -111,14 +127,15 @@ public class MainWindow extends JPanel {
         urlEditor.setPreferredSize(new Dimension(this.getWidth(), 100));
         urlEditor.setBorder(JBUI.Borders.empty(10));
         this.add(urlEditor, BorderLayout.NORTH);
-//        urlEditor.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-////                    updateDetail(urlEditor.getText());
-//                }
-//            }
-//        });
+        urlEditor.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    System.out.println("enter");
+                    urlToolPanel.setModelList(urlEditor.getText());
+                }
+            }
+        });
     }
 
 }
