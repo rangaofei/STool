@@ -14,7 +14,6 @@ public class UrlQueryParamList extends JBList<UrlModel> {
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setFixedCellWidth(200);
         this.setCellRenderer(new UrlItemRender());
-        this.setUI();
     }
 
     @Override
