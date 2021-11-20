@@ -14,7 +14,7 @@ public class CodecPanel extends JPanel {
 
     private CodecButtonListener listener;
     private JPanel outputPanel;
-    private ImagePane imagePane;
+    private ImageScrollPane imagePane;
 
     public CodecPanel(CodecButtonListener listener) {
         this.listener = listener;
@@ -42,8 +42,6 @@ public class CodecPanel extends JPanel {
         this.add(outputPanel,BorderLayout.CENTER);
         textArea = new ScrollTextArea();
         textArea.setBorder(JBUI.Borders.empty(10));
-        imagePane = new ImagePane();
-        imagePane.setBorder(JBUI.Borders.empty(10));
     }
 
     public void setText(String text) {
@@ -54,8 +52,9 @@ public class CodecPanel extends JPanel {
 
     public void setImage(BufferedImage image){
         outputPanel.removeAll();
+        imagePane = new ImageScrollPane();
+        imagePane.setBorder(JBUI.Borders.empty(10));
         imagePane.setImage(image);
-        imagePane.repaint();
         outputPanel.add(imagePane,BorderLayout.CENTER);
     }
 
