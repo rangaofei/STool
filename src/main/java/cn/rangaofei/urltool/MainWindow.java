@@ -3,6 +3,7 @@ package cn.rangaofei.urltool;
 import cn.rangaofei.urltool.bar.BarCodeListener;
 import cn.rangaofei.urltool.bar.BarPanel;
 import cn.rangaofei.urltool.bar.BarcodeTool;
+import cn.rangaofei.urltool.codec.Base64Util;
 import cn.rangaofei.urltool.codec.CodecButtonListener;
 import cn.rangaofei.urltool.codec.CodecPanel;
 import cn.rangaofei.urltool.url.UrlParseListener;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class MainWindow extends JPanel {
     private ScrollTextArea urlEditor;
@@ -55,8 +57,37 @@ public class MainWindow extends JPanel {
 
             @Override
             public void base64Decode() {
-                String str = CodecTool.decodeBase64(urlEditor.getText());
-                codecPanel.setText(str);
+                String inputText = urlEditor.getText();
+                if (Base64Util.isImage(inputText)) {
+                    int result = JOptionPane.showConfirmDialog(
+                            MainWindow.this,
+                            "检测到当前文本为base64编码图片，是否显示为图片？",
+                            "温馨提示",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.PLAIN_MESSAGE
+                    );
+                    System.out.println(result);
+                    if (result == JOptionPane.YES_OPTION) {
+                        try {
+                            BufferedImage image = Base64Util.decodeBase64ToImage(inputText);
+                            System.out.println("image ::" + (image == null));
+                            codecPanel.setImage(image);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        String str = CodecTool.decodeBase64(inputText);
+                        codecPanel.setText(str);
+                    }
+                } else {
+                    String str = CodecTool.decodeBase64(inputText);
+                    codecPanel.setText(str);
+                }
+            }
+
+            @Override
+            public void base64DecodeImage() {
+
             }
 
             @Override
@@ -105,7 +136,7 @@ public class MainWindow extends JPanel {
         });
     }
 
-    private void initUrlToolPanel(){
+    private void initUrlToolPanel() {
         urlToolPanel = new UrlToolPanel(new UrlParseListener() {
             @Override
             public void urlParseClick() {
@@ -118,7 +149,7 @@ public class MainWindow extends JPanel {
         tabBar = new JBTabbedPane();
         tabBar.insertTab("Codec", null, codecPanel, "", 0);
         tabBar.insertTab("BarCode", null, barPanel, "", 1);
-        tabBar.insertTab("UrlTool", null, urlToolPanel, "", 2);
+//        tabBar.insertTab("UrlTool", null, urlToolPanel, "", 2);
         this.add(tabBar, BorderLayout.CENTER);
     }
 

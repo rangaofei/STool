@@ -6,12 +6,15 @@ import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CodecPanel extends JPanel {
     private ScrollTextArea textArea;
     private JBTabbedPane tabbedPane;
 
     private CodecButtonListener listener;
+    private JPanel outputPanel;
+    private ImageScrollPane imagePane;
 
     public CodecPanel(CodecButtonListener listener) {
         this.listener = listener;
@@ -21,7 +24,7 @@ public class CodecPanel extends JPanel {
     private void initData() {
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
-        addOutPutText();
+        addOutPutPane();
         addTabbedPane();
     }
 
@@ -33,15 +36,26 @@ public class CodecPanel extends JPanel {
         this.add(tabbedPane, BorderLayout.NORTH);
     }
 
-
-    private void addOutPutText() {
+    private void addOutPutPane(){
+        outputPanel = new JPanel();
+        outputPanel.setLayout(new BorderLayout());
+        this.add(outputPanel,BorderLayout.CENTER);
         textArea = new ScrollTextArea();
         textArea.setBorder(JBUI.Borders.empty(10));
-        this.add(textArea, BorderLayout.CENTER);
     }
 
     public void setText(String text) {
         textArea.setText(text);
+        outputPanel.removeAll();
+        outputPanel.add(textArea,BorderLayout.CENTER);
+    }
+
+    public void setImage(BufferedImage image){
+        outputPanel.removeAll();
+        imagePane = new ImageScrollPane();
+        imagePane.setBorder(JBUI.Borders.empty(10));
+        imagePane.setImage(image);
+        outputPanel.add(imagePane,BorderLayout.CENTER);
     }
 
 }
