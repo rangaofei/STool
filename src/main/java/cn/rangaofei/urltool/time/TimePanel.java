@@ -130,21 +130,11 @@ public class TimePanel extends JPanel {
         box.add(unitComboBox1);
         box.add(Box.createHorizontalStrut(10));
         translate1 = new Button("转换");
-        translate1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String timeStampStr = timeStamp1.getText();
-                if (StringUtils.isEmpty(timeStampStr)) {
-                    return;
-                }
-                try {
-                    long timeStamp = Long.parseLong(timeStampStr);
-                    String result = TimeTool.timeStampToTime(timeStamp);
-                    time1.setText(result);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
+        translate1.addActionListener(e -> {
+            String timeStampStr = timeStamp1.getText();
+            TimeUnit tu = (TimeUnit) unitComboBox1.getSelectedItem();
+            String result = TimeTool.timeStampToTime(timeStampStr, tu);
+            time1.setText(result);
         });
         box.add(translate1);
         return box;
@@ -210,10 +200,8 @@ public class TimePanel extends JPanel {
         translate2 = new Button("转换");
         translate2.addActionListener(e -> {
             String time = time2.getText();
-            if (StringUtils.isEmpty(time)) {
-                return;
-            }
-            timeStamp2.setText(String.valueOf(TimeTool.timeToTimeStamp(time)));
+            TimeUnit tu = (TimeUnit) unitComboBox2.getSelectedItem();
+            timeStamp2.setText(String.valueOf(TimeTool.timeToTimeStamp(time, tu)));
         });
         box.add(translate2);
         return box;
