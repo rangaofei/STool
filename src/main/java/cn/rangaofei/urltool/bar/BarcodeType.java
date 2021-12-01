@@ -44,4 +44,9 @@ public enum BarcodeType {
     public void setFormat(BarcodeFormat format) {
         this.format = format;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

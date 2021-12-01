@@ -6,6 +6,7 @@ import cn.rangaofei.urltool.bar.BarcodeTool;
 import cn.rangaofei.urltool.codec.Base64Util;
 import cn.rangaofei.urltool.codec.CodecButtonListener;
 import cn.rangaofei.urltool.codec.CodecPanel;
+import cn.rangaofei.urltool.time.TimePanel;
 import cn.rangaofei.urltool.url.UrlParseListener;
 import cn.rangaofei.urltool.url.UrlToolPanel;
 import cn.rangaofei.urltool.widget.ScrollTextArea;
@@ -27,6 +28,7 @@ public class MainWindow extends JPanel {
     private CodecPanel codecPanel;
     private BarPanel barPanel;
     private UrlToolPanel urlToolPanel;
+    private TimePanel timePanel;
 
     public MainWindow(ToolWindow toolWindow) {
         initView();
@@ -38,6 +40,7 @@ public class MainWindow extends JPanel {
         initCodecPanel();
         initBarPanel();
         initUrlToolPanel();
+        initTimePanel();
         initTab();
     }
 
@@ -145,10 +148,15 @@ public class MainWindow extends JPanel {
         });
     }
 
+    private void initTimePanel(){
+        timePanel = new TimePanel();
+    }
+
     private void initTab() {
         tabBar = new JBTabbedPane();
         tabBar.insertTab("Codec", null, codecPanel, "", 0);
         tabBar.insertTab("BarCode", null, barPanel, "", 1);
+        tabBar.insertTab("Time",null,timePanel,"",2);
 //        tabBar.insertTab("UrlTool", null, urlToolPanel, "", 2);
         this.add(tabBar, BorderLayout.CENTER);
     }
