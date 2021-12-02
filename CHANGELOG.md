@@ -1,4 +1,7 @@
-<strong> V0.0.8 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-12-01</font><br>
+<strong> V0.0.9 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: x-small; ">2021-12-02</span><br>
+add time format option<br>
+<br>
+<strong> V0.0.8 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: x-small; ">2021-12-01</span><br>
 add time tool<br>
 <br>
 <strong> V0.0.7 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: x-small; ">2021-11-20</span><br>
