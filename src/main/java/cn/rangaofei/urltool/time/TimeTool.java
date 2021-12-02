@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 public class TimeTool {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-    public static String timeStampToTime(String ts, TimeUnit timeUnit) {
+    public static String timeStampToTime(String ts, TimeUnit timeUnit,TimeFormat format) {
         if (StringUtils.isEmpty(ts)) {
             return "";
         }
@@ -17,6 +17,7 @@ public class TimeTool {
             if (timeUnit == TimeUnit.SECOND) {
                 timeStamp = timeStamp * 1000;
             }
+            sdf.applyPattern(format.getFormatLayout());
             return timeStampToTime(timeStamp);
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,10 +32,11 @@ public class TimeTool {
         return sdf.format(ts);
     }
 
-    public static long timeToTimeStamp(String time, TimeUnit timeUnit) {
+    public static long timeToTimeStamp(String time, TimeUnit timeUnit,TimeFormat format) {
         if (StringUtils.isEmpty(time)) {
             return 0;
         }
+        sdf.applyPattern(format.getFormatLayout());
         long millSeconds = timeToTimeStamp(time);
         if (timeUnit == TimeUnit.SECOND) {
             millSeconds = millSeconds / 1000;

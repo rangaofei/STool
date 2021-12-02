@@ -17,6 +17,8 @@ public class TimePanel extends JPanel {
     private JButton timerToggle;
     private JButton timerLabel;
 
+    private ComboBox<TimeFormat> formatComboBox;
+
     private ComboBox<TimeUnit> unitComboBox1;
     private JBTextField time1;
     private Button translate1;
@@ -36,9 +38,11 @@ public class TimePanel extends JPanel {
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(layout);
         initTimer();
-        this.add(Box.createVerticalStrut(20));
+//        this.add(Box.createVerticalStrut(10));
+        initTimeFormat();
+//        this.add(Box.createVerticalStrut(10));
         initTimeStampToTime();
-        this.add(Box.createVerticalStrut(20));
+//        this.add(Box.createVerticalStrut(10));
         initTimeToTimeStamp();
     }
 
@@ -47,13 +51,9 @@ public class TimePanel extends JPanel {
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
         jPanel.add(new JBLabel("当前时间"));
         jPanel.add(Box.createHorizontalStrut(10));
-        timerLabel = new JButton(String.valueOf(System.currentTimeMillis()));
-        timerLabel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeStamp1.setText(timerLabel.getText());
-            }
-        });
+        timerLabel= new JButton(String.valueOf(System.currentTimeMillis()));
+        timerLabel.setToolTipText("点击填充当前时间");
+        timerLabel.addActionListener(e -> timeStamp1.setText(timerLabel.getText()));
         jPanel.add(timerLabel);
         jPanel.add(Box.createHorizontalGlue());
         jPanel.add(Box.createHorizontalStrut(10));
@@ -65,11 +65,21 @@ public class TimePanel extends JPanel {
         this.add(jPanel);
     }
 
+    private void initTimeFormat(){
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
+        jPanel.add(new JBLabel("时间格式"));
+        jPanel.add(Box.createHorizontalStrut(10));
+        formatComboBox = createFormatComboBox();
+        jPanel.add(formatComboBox);
+        jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.add(jPanel);
+    }
+
     private ActionListener actionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             timerLabel.setText(String.valueOf(e.getWhen()));
-
         }
     };
 
@@ -133,7 +143,8 @@ public class TimePanel extends JPanel {
         translate1.addActionListener(e -> {
             String timeStampStr = timeStamp1.getText();
             TimeUnit tu = (TimeUnit) unitComboBox1.getSelectedItem();
-            String result = TimeTool.timeStampToTime(timeStampStr, tu);
+            TimeFormat tf = (TimeFormat) formatComboBox.getSelectedItem();
+            String result = TimeTool.timeStampToTime(timeStampStr, tu,tf);
             time1.setText(result);
         });
         box.add(translate1);
@@ -147,6 +158,14 @@ public class TimePanel extends JPanel {
         time1 = new JBTextField();
         box.add(time1);
         return box;
+    }
+
+    private ComboBox<TimeFormat> createFormatComboBox(){
+        ComboBox<TimeFormat> comboBox = new ComboBox<>();
+        for(TimeFormat format: TimeFormat.values()){
+            comboBox.addItem(format);
+        }
+        return comboBox;
     }
 
 
@@ -201,7 +220,8 @@ public class TimePanel extends JPanel {
         translate2.addActionListener(e -> {
             String time = time2.getText();
             TimeUnit tu = (TimeUnit) unitComboBox2.getSelectedItem();
-            timeStamp2.setText(String.valueOf(TimeTool.timeToTimeStamp(time, tu)));
+            TimeFormat tf = (TimeFormat) formatComboBox.getSelectedItem();
+            timeStamp2.setText(String.valueOf(TimeTool.timeToTimeStamp(time, tu,tf)));
         });
         box.add(translate2);
         return box;
