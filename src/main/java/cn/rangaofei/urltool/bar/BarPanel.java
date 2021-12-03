@@ -1,5 +1,7 @@
 package cn.rangaofei.urltool.bar;
 
+import cn.rangaofei.urltool.BaseTextFieldPanel;
+import com.google.zxing.WriterException;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTabbedPane;
 
@@ -7,21 +9,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class BarPanel extends JPanel {
+public class BarPanel extends BaseTextFieldPanel {
     private JBTabbedPane tabbedPane;
     private JBLabel label;
     private BarCodeToolbar barCodeToolbar;
     private QrCodeToolbar qrCodeToolbar;
     private BarCodeListener listener;
 
-    public BarPanel(BarCodeListener listener) {
-        this.listener = listener;
+    public BarPanel() {
+        super();
+        this.listener = new BarCodeListener() {
+            @Override
+            public void barCodeClick() {
+                BufferedImage image = null;
+                try {
+                    image = BarcodeTool.generateBarCode39(getTextFileText(), getBarCodeType());
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+                setImage(image);
+            }
+
+            @Override
+            public void qrCodeClick() {
+                BufferedImage image = null;
+                try {
+                    image = BarcodeTool.generateQrCode(getTextFileText());
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+                setImage(image);
+            }
+        };
         initView();
     }
 
     private void initView() {
-        BorderLayout layout = new BorderLayout();
-        this.setLayout(layout);
         addCanvas();
         initBarCodeToolbar();
         initQrCodeToolbar();
@@ -30,7 +53,7 @@ public class BarPanel extends JPanel {
 
     private void addCanvas() {
         label = new JBLabel("", JBLabel.CENTER);
-        this.add(label, BorderLayout.CENTER);
+        this.childAdd(label, BorderLayout.CENTER);
     }
 
     private void initBarCodeToolbar() {
@@ -45,7 +68,7 @@ public class BarPanel extends JPanel {
         tabbedPane = new JBTabbedPane();
         tabbedPane.insertTab("BarCode", null, barCodeToolbar, "", 0);
         tabbedPane.insertTab("QrCode", null, qrCodeToolbar, "", 1);
-        this.add(tabbedPane, BorderLayout.NORTH);
+        this.childAdd(tabbedPane, BorderLayout.NORTH);
     }
 
     public BarcodeType getBarCodeType(){

@@ -17,7 +17,7 @@ public class CodecTool {
         return URLEncoder.encode(str, StandardCharsets.UTF_8);
     }
 
-    public static String decodeBase64(String str) {
+    public static String decodeBase64(String str) throws IllegalArgumentException{
         if (StringUtils.isEmpty(str)) {
             return null;
         }
