@@ -40,7 +40,7 @@ publishPlugin {
 
 patchPluginXml {
     version = project.version
-    sinceBuild = '203'
+    sinceBuild = '202'
     untilBuild = '212.*'
     changeNotes = """
       <strong> V0.0.9 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-12-02</font><br>
@@ -55,9 +55,6 @@ patchPluginXml {
       <strong> V0.0.6 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-15</font><br>
       add barcode and qrcode generation<br>
       <br>
-     
-     
-
       """
 }
 test {
