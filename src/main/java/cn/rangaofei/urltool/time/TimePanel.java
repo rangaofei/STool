@@ -21,12 +21,12 @@ public class TimePanel extends JPanel {
 
     private ComboBox<TimeUnit> unitComboBox1;
     private JBTextField time1;
-    private Button translate1;
+    private JButton translate1;
     private JBTextField timeStamp1;
 
     private ComboBox<TimeUnit> unitComboBox2;
     private JBTextField time2;
-    private Button translate2;
+    private JButton translate2;
     private JBTextField timeStamp2;
     private Timer timer;
 
@@ -44,6 +44,7 @@ public class TimePanel extends JPanel {
         initTimeStampToTime();
 //        this.add(Box.createVerticalStrut(10));
         initTimeToTimeStamp();
+        this.add(Box.createVerticalGlue());
     }
 
     private void initTimer() {
@@ -54,6 +55,8 @@ public class TimePanel extends JPanel {
         timerLabel= new JButton(String.valueOf(System.currentTimeMillis()));
         timerLabel.setToolTipText("点击填充当前时间");
         timerLabel.addActionListener(e -> timeStamp1.setText(timerLabel.getText()));
+//        timerLabel.setMaximumSize(new Dimension(200,-1));
+        timerLabel.setPreferredSize(new Dimension(200,-1));
         jPanel.add(timerLabel);
         jPanel.add(Box.createHorizontalGlue());
         jPanel.add(Box.createHorizontalStrut(10));
@@ -62,6 +65,8 @@ public class TimePanel extends JPanel {
         jPanel.add(timerToggle);
         startTimer();
         jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel.setMaximumSize(new Dimension(100000,50));
+        jPanel.setPreferredSize(new Dimension(-1,50));
         this.add(jPanel);
     }
 
@@ -73,6 +78,8 @@ public class TimePanel extends JPanel {
         formatComboBox = createFormatComboBox();
         jPanel.add(formatComboBox);
         jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel.setMaximumSize(new Dimension(10000,50));
+        jPanel.setPreferredSize(new Dimension(-1,50));
         this.add(jPanel);
     }
 
@@ -118,6 +125,8 @@ public class TimePanel extends JPanel {
         this.add(Box.createVerticalStrut(10));
         jPanel.add(initTimeStampToTimeBottom());
         jPanel.setBorder(createTitledBorder("时间戳转时间"));
+        jPanel.setMaximumSize(new Dimension(100000,300));
+//        jPanel.setPreferredSize(new Dimension(-1,-1));
         this.add(jPanel);
     }
 
@@ -126,7 +135,7 @@ public class TimePanel extends JPanel {
         Box box = Box.createHorizontalBox();
         box.add(new JBLabel("时间戳   "));
         box.add(Box.createHorizontalStrut(10));
-        timeStamp1 = new JBTextField();
+        timeStamp1 = createFixSizeTextField();
         box.add(timeStamp1);
         return box;
     }
@@ -139,7 +148,7 @@ public class TimePanel extends JPanel {
         unitComboBox1 = createUnitComboBox();
         box.add(unitComboBox1);
         box.add(Box.createHorizontalStrut(10));
-        translate1 = new Button("转换");
+        translate1 = new JButton("转换");
         translate1.addActionListener(e -> {
             String timeStampStr = timeStamp1.getText();
             TimeUnit tu = (TimeUnit) unitComboBox1.getSelectedItem();
@@ -155,28 +164,10 @@ public class TimePanel extends JPanel {
         Box box = Box.createHorizontalBox();
         box.add(new JBLabel("北京时间"));
         box.add(Box.createHorizontalStrut(10));
-        time1 = new JBTextField();
+        time1 = createFixSizeTextField();
         box.add(time1);
         return box;
     }
-
-    private ComboBox<TimeFormat> createFormatComboBox(){
-        ComboBox<TimeFormat> comboBox = new ComboBox<>();
-        for(TimeFormat format: TimeFormat.values()){
-            comboBox.addItem(format);
-        }
-        return comboBox;
-    }
-
-
-    private ComboBox<TimeUnit> createUnitComboBox() {
-        ComboBox<TimeUnit> comboBox = new ComboBox<>();
-        for (TimeUnit unit : TimeUnit.values()) {
-            comboBox.addItem(unit);
-        }
-        return comboBox;
-    }
-
 
     private void initTimeToTimeStamp() {
         JPanel jPanel = new JPanel();
@@ -187,22 +178,15 @@ public class TimePanel extends JPanel {
         this.add(Box.createVerticalStrut(10));
         jPanel.add(initTimeToTimeStampBottom());
         jPanel.setBorder(createTitledBorder("时间转时间戳"));
+        jPanel.setMaximumSize(new Dimension(100000,300));
         this.add(jPanel);
-    }
-
-
-    private Border createTitledBorder(String title) {
-        Border lineBorder = BorderFactory.createLineBorder(JBColor.BLACK, 1, true);
-        Border titleBorder = BorderFactory.createTitledBorder(lineBorder, title);
-        Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        return BorderFactory.createCompoundBorder(titleBorder, emptyBorder);
     }
 
     private Box initTimeToTimeStampTop() {
         Box box = Box.createHorizontalBox();
         box.add(new JBLabel("北京时间"));
         box.add(Box.createHorizontalStrut(10));
-        time2 = new JBTextField();
+        time2 = createFixSizeTextField();
         time2.setText(time1.getText());
         box.add(time2);
         return box;
@@ -216,7 +200,7 @@ public class TimePanel extends JPanel {
         unitComboBox2 = createUnitComboBox();
         box.add(unitComboBox2);
         box.add(Box.createHorizontalStrut(10));
-        translate2 = new Button("转换");
+        translate2 = new JButton("转换");
         translate2.addActionListener(e -> {
             String time = time2.getText();
             TimeUnit tu = (TimeUnit) unitComboBox2.getSelectedItem();
@@ -231,8 +215,49 @@ public class TimePanel extends JPanel {
         Box box = Box.createHorizontalBox();
         box.add(new JBLabel("时间戳   "));
         box.add(Box.createHorizontalStrut(10));
-        timeStamp2 = new JBTextField();
+        timeStamp2 = createFixSizeTextField();
         box.add(timeStamp2);
         return box;
+    }
+
+    private Border createTitledBorder(String title) {
+        Border lineBorder = BorderFactory.createLineBorder(JBColor.BLACK, 1, true);
+        Border titleBorder = BorderFactory.createTitledBorder(lineBorder, title);
+        Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        return BorderFactory.createCompoundBorder(titleBorder, emptyBorder);
+    }
+
+    private ComboBox<TimeUnit> createUnitComboBox() {
+        ComboBox<TimeUnit> comboBox = new ComboBox<>();
+        comboBox.setMaximumSize(new Dimension(1000,30));
+        comboBox.setPreferredSize(new Dimension(-1,30));
+        for (TimeUnit unit : TimeUnit.values()) {
+            comboBox.addItem(unit);
+        }
+        return comboBox;
+    }
+
+    private ComboBox<TimeFormat> createFormatComboBox(){
+        ComboBox<TimeFormat> comboBox = new ComboBox<>();
+        comboBox.setMaximumSize(new Dimension(1000,30));
+        comboBox.setPreferredSize(new Dimension(-1,30));
+        for(TimeFormat format: TimeFormat.values()){
+            comboBox.addItem(format);
+        }
+        return comboBox;
+    }
+
+
+    private JBTextField createFixSizeTextField(){
+        JBTextField textField = new JBTextField();
+        textField.setMaximumSize(new Dimension(1000,30));
+        textField.setPreferredSize(new Dimension(50,30));
+        return textField;
+    }
+
+    private JButton createFixSizeButton(String text){
+        JButton button = new JButton(text);
+        button.setPreferredSize(new Dimension(-1,-1));
+        return button;
     }
 }
