@@ -7,7 +7,7 @@ sourceCompatibility = 11
 
 def major_version = 0
 def minor_version = 0
-def build_version = 9
+def build_version = 10
 
 def versionCode = major_version * 1000 + minor_version * 100 + build_version
 
