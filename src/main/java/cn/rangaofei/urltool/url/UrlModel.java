@@ -3,6 +3,7 @@ package cn.rangaofei.urltool.url;
 public class UrlModel {
     private String key;
     private String value;
+    private boolean selected;
 
     public String getKey() {
         return key;
@@ -18,5 +19,13 @@ public class UrlModel {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
