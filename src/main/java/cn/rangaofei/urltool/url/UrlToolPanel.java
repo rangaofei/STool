@@ -1,6 +1,8 @@
 package cn.rangaofei.urltool.url;
 
 import cn.rangaofei.urltool.BaseTextFieldPanel;
+import cn.rangaofei.urltool.SystemTool;
+import cn.rangaofei.urltool.widget.SimpleDialog;
 import com.intellij.ui.components.JBScrollPane;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,6 +17,8 @@ public class UrlToolPanel extends BaseTextFieldPanel {
     private JButton generateButton;
     private UrlQueryParamList urlQueryParamList;
     private UrlParseListener listener;
+
+    private static final String[] options = new String[]{"确认", "复制"};
 
     public UrlToolPanel() {
         super();
@@ -40,7 +44,7 @@ public class UrlToolPanel extends BaseTextFieldPanel {
 
     private void initButton() {
         JPanel jPanel = new JPanel();
-        jPanel.setLayout(new BoxLayout(jPanel,BoxLayout.X_AXIS));
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
         parseButton = new JButton("Parse");
         parseButton.addActionListener(e -> {
             if (listener == null) {
@@ -51,7 +55,7 @@ public class UrlToolPanel extends BaseTextFieldPanel {
         jPanel.add(parseButton);
         generateButton = new JButton("Generate");
         generateButton.addActionListener(e -> {
-            if(listener==null){
+            if (listener == null) {
                 return;
             }
             listener.urlGenerateClick();
@@ -83,13 +87,8 @@ public class UrlToolPanel extends BaseTextFieldPanel {
         urlQueryParamList.setModelList(modelList);
     }
 
-    public void showUrlDialog(String url){
-        int result = JOptionPane.showConfirmDialog(
-                this,
-                url,
-                "New Url",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.PLAIN_MESSAGE
-        );
+    public void showUrlDialog(String url) {
+        SimpleDialog simpleDialog = new SimpleDialog(null,this,"Message",url);
+        simpleDialog.setVisible(true);
     }
 }
