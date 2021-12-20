@@ -52,11 +52,18 @@ public class TimePanel extends JPanel {
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
         jPanel.add(new JBLabel("当前时间"));
         jPanel.add(Box.createHorizontalStrut(10));
-        timerLabel= new JButton(String.valueOf(System.currentTimeMillis()));
+        timerLabel = new JButton(String.valueOf(System.currentTimeMillis()));
         timerLabel.setToolTipText("点击填充当前时间");
-        timerLabel.addActionListener(e -> timeStamp1.setText(timerLabel.getText()));
+        timerLabel.addActionListener(e -> {
+            timeStamp1.setText(timerLabel.getText());
+            String timeStampStr = timeStamp1.getText();
+            TimeUnit tu = (TimeUnit) unitComboBox1.getSelectedItem();
+            TimeFormat tf = (TimeFormat) formatComboBox.getSelectedItem();
+            String result = TimeTool.timeStampToTime(timeStampStr, tu, tf);
+            time1.setText(result);
+        });
 //        timerLabel.setMaximumSize(new Dimension(200,-1));
-        timerLabel.setPreferredSize(new Dimension(200,-1));
+        timerLabel.setPreferredSize(new Dimension(200, -1));
         jPanel.add(timerLabel);
         jPanel.add(Box.createHorizontalGlue());
         jPanel.add(Box.createHorizontalStrut(10));
@@ -65,12 +72,12 @@ public class TimePanel extends JPanel {
         jPanel.add(timerToggle);
         startTimer();
         jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jPanel.setMaximumSize(new Dimension(100000,50));
-        jPanel.setPreferredSize(new Dimension(-1,50));
+        jPanel.setMaximumSize(new Dimension(100000, 50));
+        jPanel.setPreferredSize(new Dimension(-1, 50));
         this.add(jPanel);
     }
 
-    private void initTimeFormat(){
+    private void initTimeFormat() {
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
         jPanel.add(new JBLabel("时间格式"));
@@ -78,8 +85,8 @@ public class TimePanel extends JPanel {
         formatComboBox = createFormatComboBox();
         jPanel.add(formatComboBox);
         jPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jPanel.setMaximumSize(new Dimension(10000,50));
-        jPanel.setPreferredSize(new Dimension(-1,50));
+        jPanel.setMaximumSize(new Dimension(10000, 50));
+        jPanel.setPreferredSize(new Dimension(-1, 50));
         this.add(jPanel);
     }
 
@@ -101,7 +108,7 @@ public class TimePanel extends JPanel {
 
     private void startTimer() {
         if (timer == null) {
-            timer = new Timer(500, null);
+            timer = new Timer(1000, null);
             timer.setRepeats(true);
         }
         timer.addActionListener(actionListener);
@@ -125,7 +132,7 @@ public class TimePanel extends JPanel {
         this.add(Box.createVerticalStrut(10));
         jPanel.add(initTimeStampToTimeBottom());
         jPanel.setBorder(createTitledBorder("时间戳转时间"));
-        jPanel.setMaximumSize(new Dimension(100000,300));
+        jPanel.setMaximumSize(new Dimension(100000, 300));
 //        jPanel.setPreferredSize(new Dimension(-1,-1));
         this.add(jPanel);
     }
@@ -153,7 +160,7 @@ public class TimePanel extends JPanel {
             String timeStampStr = timeStamp1.getText();
             TimeUnit tu = (TimeUnit) unitComboBox1.getSelectedItem();
             TimeFormat tf = (TimeFormat) formatComboBox.getSelectedItem();
-            String result = TimeTool.timeStampToTime(timeStampStr, tu,tf);
+            String result = TimeTool.timeStampToTime(timeStampStr, tu, tf);
             time1.setText(result);
         });
         box.add(translate1);
@@ -178,7 +185,7 @@ public class TimePanel extends JPanel {
         this.add(Box.createVerticalStrut(10));
         jPanel.add(initTimeToTimeStampBottom());
         jPanel.setBorder(createTitledBorder("时间转时间戳"));
-        jPanel.setMaximumSize(new Dimension(100000,300));
+        jPanel.setMaximumSize(new Dimension(100000, 300));
         this.add(jPanel);
     }
 
@@ -205,7 +212,7 @@ public class TimePanel extends JPanel {
             String time = time2.getText();
             TimeUnit tu = (TimeUnit) unitComboBox2.getSelectedItem();
             TimeFormat tf = (TimeFormat) formatComboBox.getSelectedItem();
-            timeStamp2.setText(String.valueOf(TimeTool.timeToTimeStamp(time, tu,tf)));
+            timeStamp2.setText(String.valueOf(TimeTool.timeToTimeStamp(time, tu, tf)));
         });
         box.add(translate2);
         return box;
@@ -229,35 +236,35 @@ public class TimePanel extends JPanel {
 
     private ComboBox<TimeUnit> createUnitComboBox() {
         ComboBox<TimeUnit> comboBox = new ComboBox<>();
-        comboBox.setMaximumSize(new Dimension(1000,30));
-        comboBox.setPreferredSize(new Dimension(-1,30));
+        comboBox.setMaximumSize(new Dimension(1000, 30));
+        comboBox.setPreferredSize(new Dimension(-1, 30));
         for (TimeUnit unit : TimeUnit.values()) {
             comboBox.addItem(unit);
         }
         return comboBox;
     }
 
-    private ComboBox<TimeFormat> createFormatComboBox(){
+    private ComboBox<TimeFormat> createFormatComboBox() {
         ComboBox<TimeFormat> comboBox = new ComboBox<>();
-        comboBox.setMaximumSize(new Dimension(1000,30));
-        comboBox.setPreferredSize(new Dimension(-1,30));
-        for(TimeFormat format: TimeFormat.values()){
+        comboBox.setMaximumSize(new Dimension(1000, 30));
+        comboBox.setPreferredSize(new Dimension(-1, 30));
+        for (TimeFormat format : TimeFormat.values()) {
             comboBox.addItem(format);
         }
         return comboBox;
     }
 
 
-    private JBTextField createFixSizeTextField(){
+    private JBTextField createFixSizeTextField() {
         JBTextField textField = new JBTextField();
-        textField.setMaximumSize(new Dimension(1000,30));
-        textField.setPreferredSize(new Dimension(50,30));
+        textField.setMaximumSize(new Dimension(1000, 30));
+        textField.setPreferredSize(new Dimension(50, 30));
         return textField;
     }
 
-    private JButton createFixSizeButton(String text){
+    private JButton createFixSizeButton(String text) {
         JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(-1,-1));
+        button.setPreferredSize(new Dimension(-1, -1));
         return button;
     }
 }

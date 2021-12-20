@@ -7,7 +7,7 @@ sourceCompatibility = 11
 
 def major_version = 0
 def minor_version = 0
-def build_version = 10
+def build_version = 12
 
 def versionCode = major_version * 1000 + minor_version * 100 + build_version
 
@@ -41,20 +41,17 @@ publishPlugin {
 patchPluginXml {
     version = project.version
     sinceBuild = '202'
-    untilBuild = '212.*'
+    untilBuild = '213.*'
     changeNotes = """
+        <span> V0.0.12 </span>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-12-20</font><br>
+        optimize time format option<br>
+        <br>
+        <span> V0.0.11 </span>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-12-07</font><br>
+        pretty the layout<br>
+        <br>
         <span> V0.0.10 </span>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-15</font><br>
         make the time tool pretty<br>
         <br>
-        <strong> V0.0.9 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-12-02</font><br>
-        add time format option<br>
-        <br>
-        <strong> V0.0.8 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-12-01</font><br>
-        add time tool<br>
-        <br>
-        <strong> V0.0.7 </strong>&nbsp;&nbsp;&nbsp;&nbsp;<font size="2">2021-11-15</font><br>
-        add base64 to image tool<br>
-        <br>`
       """
 }
 test {

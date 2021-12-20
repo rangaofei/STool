@@ -27,7 +27,7 @@ public class MainWindow extends JPanel {
         tabBar.insertTab("Codec", null, new CodecPanel(), "", 0);
         tabBar.insertTab("BarCode", null, new BarPanel(), "", 1);
         tabBar.insertTab("Time", null, new TimePanel(), "", 2);
-        tabBar.insertTab("UrlTool", null, new UrlToolPanel(), "", 3);
+//        tabBar.insertTab("UrlTool", null, new UrlToolPanel(), "", 3);
         this.add(tabBar, BorderLayout.CENTER);
     }
 

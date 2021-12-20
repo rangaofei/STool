@@ -1,3 +1,6 @@
+<span> V0.0.12 </span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: x-small; ">2021-12-20</span><br>
+optimize time format option<br>
+<br>
 <span> V0.0.10 </span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: x-small; ">2021-11-15</span><br>
 make the time tool pretty<br>
 <br>
